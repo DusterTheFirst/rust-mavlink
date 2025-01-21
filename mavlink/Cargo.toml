@@ -34,74 +34,57 @@ bitflags = { workspace = true }
 serde = { version = "1.0.115", optional = true, features = ["derive"] }
 serde_arrays = { version = "0.1.0", optional = true }
 
+defmt = { version = "0.3.10", optional = true }
+postcard-schema = { version = "0.2.0", optional = true, features = ["derive"] }
+
 [features]
-"all" = [
-    "ardupilotmega",
-    "asluav",
-    "common",
-    "development",
-    "icarous",
-    "minimal",
-    "python_array_test",
-    "standard",
-    "test",
-    "ualberta",
-    "uavionix",
-    "avssuas",
-    "cubepilot",
-]
-"ardupilotmega" = ["common", "icarous", "uavionix"]
-"asluav" = ["common"]
-"avssuas" = ["common"]
-"development" = ["common"]
-"matrixpilot" = ["common"]
-"minimal" = []
-"paparazzi" = ["common"]
+default = ["ardupilotmega", "direct-serial", "serde", "std", "tcp", "udp"]
+
+"common"            = []
+"minimal"           = []
+"test"              = []
+"standard"          = ["common"]
+"development"       = ["common"]
+
+"ardupilotmega"     = ["common", "icarous", "uavionix"]
+"asluav"            = ["common"]
+"avssuas"           = ["common"]
+"cubepilot"         = ["common"]
+"icarous"           = []
+"matrixpilot"       = ["common"]
+"paparazzi"         = ["common"]
+"slugs"             = ["common"]
+"storm32"           = ["common"]
+"ualberta"          = ["common"]
+"uavionix"          = ["common"]
+
 "python_array_test" = ["common"]
-"slugs" = ["common"]
-"standard" = ["common"]
-"test" = []
-"ualberta" = ["common"]
-"uavionix" = ["common"]
-"icarous" = []
-"common" = []
-"cubepilot" = ["common"]
 
-"all-dialects" = [
-    "ardupilotmega",
-    "asluav",
-    "avssuas",
-    "development",
-    "matrixpilot",
-    "minimal",
-    "paparazzi",
-    "python_array_test",
-    "slugs",
-    "standard",
-    "test",
-    "ualberta",
-    "uavionix",
-    "icarous",
-    "common",
-    "cubepilot",
-]
+"all-dialects" = ["ardupilotmega", "asluav", "avssuas", "common", "cubepilot", "development", "icarous", "matrixpilot", "minimal", "paparazzi", "python_array_test", "slugs", "standard", "storm32", "test", "ualberta", "uavionix"]
+# why is this one here?
+"all" = ["ardupilotmega", "asluav", "avssuas", "common", "cubepilot", "development", "icarous", "minimal", "python_array_test", "standard", "test", "ualberta", "uavionix"]
 
+"emit-description"      = ["mavlink-bindgen/emit-description"]
+"emit-extensions"       = ["mavlink-bindgen/emit-extensions"]
 "format-generated-code" = []
-"emit-description" = ["mavlink-bindgen/emit-description"]
-"emit-extensions" = ["mavlink-bindgen/emit-extensions"]
-"std" = ["mavlink-core/std"]
-"udp" = ["mavlink-core/udp"]
-"tcp" = ["mavlink-core/tcp"]
-"signing" = ["mavlink-core/signing"]
+
 "direct-serial" = ["mavlink-core/direct-serial"]
+"signing"       = ["mavlink-core/signing"]
+"std"           = ["mavlink-core/std"]
+"tcp"           = ["mavlink-core/tcp"]
+"udp"           = ["mavlink-core/udp"]
+"tokio-1"       = ["mavlink-core/tokio-1"]
+
 # NOTE: Only one of 'embedded' and 'embedded-hal-02' features can be enabled.
 # Use "embedded' feature to enable embedded-hal=1.0 (embedded-io and embedded-io-async is part of embedded-hal).
 # Use 'embedded-hal-0.2' feature to enable deprecated embedded-hal=0.2.3 (some hals is not supports embedded-hal=1.0 yet).
-"embedded" = ["mavlink-core/embedded"]
+"embedded"        = ["mavlink-core/embedded"]
 "embedded-hal-02" = ["mavlink-core/embedded-hal-02"]
-"serde" = ["mavlink-core/serde", "dep:serde", "dep:serde_arrays"]
-"tokio-1" = ["mavlink-core/tokio-1"]
-default = ["std", "tcp", "udp", "direct-serial", "serde", "ardupilotmega"]
+
+# Derive providers
+"serde"        = ["dep:serde", "dep:serde_arrays", "mavlink-core/serde"]
+"defmt"        = ["dep:defmt"]
+"postcard-rpc" = ["dep:postcard-schema"]
 
 # build with all features on docs.rs so that users viewing documentation
 # can see everything

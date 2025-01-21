@@ -178,6 +178,8 @@ impl MavProfile {
 
     fn emit_mav_message(&self, enums: &[TokenStream], structs: &[TokenStream]) -> TokenStream {
         quote! {
+            #[cfg_attr(feature = "defmt", derive(defmt::Format))]
+            #[cfg_attr(feature = "postcard-rpc", derive(postcard_schema::Schema))]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
             #[cfg_attr(feature = "serde", serde(tag = "type"))]
             #[repr(u32)]
@@ -379,6 +381,8 @@ impl MavEnum {
             let width = format_ident!("{}", width);
             enum_def = quote! {
                 bitflags!{
+                    #[cfg_attr(feature = "defmt", derive(defmt::Format))]
+                    #[cfg_attr(feature = "postcard-rpc", derive(postcard_schema::Schema))]
                     #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
                     #description
                     pub struct #enum_name: #width {
@@ -389,6 +393,8 @@ impl MavEnum {
         } else {
             enum_def = quote! {
                 #[derive(Debug, Copy, Clone, PartialEq, FromPrimitive, ToPrimitive)]
+                #[cfg_attr(feature = "defmt", derive(defmt::Format))]
+                #[cfg_attr(feature = "postcard-rpc", derive(postcard_schema::Schema))]
                 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
                 #[cfg_attr(feature = "serde", serde(tag = "type"))]
                 #[repr(u32)]
@@ -605,6 +611,8 @@ impl MavMessage {
         quote! {
             #description
             #[derive(Debug, Clone, PartialEq)]
+            #[cfg_attr(feature = "defmt", derive(defmt::Format))]
+            #[cfg_attr(feature = "postcard-rpc", derive(postcard_schema::Schema))]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
             pub struct #msg_name {
                 #(#name_types)*
