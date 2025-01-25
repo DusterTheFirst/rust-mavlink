@@ -31,8 +31,8 @@ mavlink-core = { path = "../mavlink-core", default-features = false }
 num-traits = { workspace = true, default-features = false }
 num-derive = { workspace = true }
 bitflags = { workspace = true }
-serde = { version = "1.0.115", optional = true, features = ["derive"] }
-serde_arrays = { version = "0.1.0", optional = true }
+serde = { version = "1.0.115", optional = true, default-features = false, features = ["derive", "alloc"] }
+serde-big-array = { version = "0.5.1", optional = true, default-features = false }
 
 defmt = { version = "0.3.10", optional = true }
 postcard-schema = { version = "0.2.0", optional = true, features = ["derive"] }
@@ -70,7 +70,7 @@ default = ["ardupilotmega", "direct-serial", "serde", "std", "tcp", "udp"]
 
 "direct-serial" = ["mavlink-core/direct-serial"]
 "signing"       = ["mavlink-core/signing"]
-"std"           = ["mavlink-core/std"]
+"std"           = ["mavlink-core/std", "serde/std"]
 "tcp"           = ["mavlink-core/tcp"]
 "udp"           = ["mavlink-core/udp"]
 "tokio-1"       = ["mavlink-core/tokio-1"]
@@ -82,7 +82,7 @@ default = ["ardupilotmega", "direct-serial", "serde", "std", "tcp", "udp"]
 "embedded-hal-02" = ["mavlink-core/embedded-hal-02"]
 
 # Derive providers
-"serde"        = ["dep:serde", "dep:serde_arrays", "mavlink-core/serde"]
+"serde"        = ["dep:serde", "dep:serde-big-array", "mavlink-core/serde"]
 "defmt"        = ["dep:defmt"]
 "postcard-rpc" = ["dep:postcard-schema"]
 

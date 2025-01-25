@@ -476,7 +476,7 @@ impl MavMessage {
                 };
 
                 let serde_with_attr = if matches!(field.mavtype, MavType::Array(_, _)) {
-                    quote!(#[cfg_attr(feature = "serde", serde(with = "serde_arrays"))])
+                    quote!(#[cfg_attr(feature = "serde", serde(with = "serde_big_array::BigArray"))])
                 } else {
                     quote!()
                 };
