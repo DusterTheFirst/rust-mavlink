@@ -181,7 +181,6 @@ impl MavProfile {
             #[cfg_attr(feature = "defmt", derive(defmt::Format))]
             #[cfg_attr(feature = "postcard-rpc", derive(postcard_schema::Schema))]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-            #[cfg_attr(feature = "serde", serde(tag = "type"))]
             #[repr(u32)]
             pub enum MavMessage {
                 #(#enums(#structs),)*
@@ -396,7 +395,6 @@ impl MavEnum {
                 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
                 #[cfg_attr(feature = "postcard-rpc", derive(postcard_schema::Schema))]
                 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-                #[cfg_attr(feature = "serde", serde(tag = "type"))]
                 #[repr(u32)]
                 #description
                 pub enum #enum_name {
@@ -990,7 +988,6 @@ impl MavType {
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[cfg_attr(feature = "serde", serde(tag = "type"))]
 pub enum MavXmlElement {
     Version,
     Mavlink,

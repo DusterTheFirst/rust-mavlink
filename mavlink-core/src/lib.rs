@@ -128,7 +128,6 @@ pub struct MavHeader {
 /// Versions of the Mavlink protocol that we support
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[cfg_attr(feature = "serde", serde(tag = "type"))]
 pub enum MavlinkVersion {
     V1,
     V2,
